@@ -5,7 +5,7 @@ import random
 import numpy as np
 
 class AI:
-    def __init__(self, weights, search_depth=5, time_limit=5.0, seed=None):
+    def __init__(self, weights, search_depth=3, time_limit=10.0, seed=None):
         """
         Initialize the AI with given weights and search parameters.
 
@@ -66,18 +66,23 @@ class AI:
             return max_score, best_move
         else:
             # Computer's turn: Expectation over possible tile spawns
-            scores = []
             empty_cells = game.get_empty_cells()
             if not empty_cells:
                 return self.evaluate(game), None
+            expected_score = 0
+            total_probability = 0
+            num_empty = len(empty_cells)
             for cell in empty_cells:
-                for value, probability in [(2, 0.9), (4, 0.1)]:
+                cell_probability = 1 / num_empty  # Probability of the tile appearing in this cell
+                for value, value_probability in [(2, 0.9), (4, 0.1)]:
+                    probability = cell_probability * value_probability
                     new_game = game.clone()
                     i, j = cell
                     new_game.board[i][j] = value
                     score, _ = self.expectimax(new_game, depth - 1, True, start_time)
-                    scores.append(score * probability)
-            expected_score = sum(scores) / len(scores)
+                    expected_score += probability * score
+                    total_probability += probability
+            # No need to divide by total_probability as it sums to 1
             return expected_score, None
 
     def evaluate(self, game):
