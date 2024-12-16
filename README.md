@@ -46,12 +46,11 @@ This project implements an AI for the game [2048](https://gabrielecirulli.github
 - **Required Python Packages:**
   - `numpy`
   - `tkinter` (usually included with Python)
-  - Any other packages used in your project
 
 ### **Clone the Repository**
 
 ```bash
-git clone https://github.com/yourusername/2048-AI-Genetic-Algorithm.git
+git clone https://github.com/VeryG00dName/2048-ai.git
 cd 2048-AI-Genetic-Algorithm
 ```
 
